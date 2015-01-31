@@ -466,7 +466,6 @@ class ControllerProductProduct extends Controller {
 			// Added code
 			///////////////////////////////////////////////////////////////////////////
 			// get information of products from same categories
-			// TODO: best-selling feature
 
 			$this->data['products_under_same_category'] = array();
 

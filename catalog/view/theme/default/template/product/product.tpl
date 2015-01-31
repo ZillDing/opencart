@@ -267,6 +267,10 @@
 		<div class="product-recommendation-products">
 				<?php foreach ($products_under_same_category as $product) { ?>
 				<div>
+					<?php if (in_array($product['product_id'], $best_seller_product_ids)) { ?>
+					<div class="best-seller"><img src="image/data/bestseller.png" /></div>
+					<?php } ?>
+
 					<?php if ($product['thumb']) { ?>
 					<div class="image"><a href="<?php echo $product['href']; ?>"><img src="<?php echo $product['thumb']; ?>" alt="<?php echo $product['name']; ?>" /></a></div>
 					<?php } ?>

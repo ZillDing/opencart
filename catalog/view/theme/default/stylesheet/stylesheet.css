@@ -686,6 +686,13 @@ a.button:hover, input.button:hover {
 .product-recommendation-title {
 	margin-bottom: 20px;
 }
+.product-recommendation-products .best-seller img {
+	height: 50px;
+}
+.product-recommendation-products .best-seller {
+	position: absolute;
+	margin-left: 50px;
+}
 .product-recommendation-products .slick-slide {
 	margin-right: 80px;
 }
@@ -727,7 +734,6 @@ a.button:hover, input.button:hover {
 .product-recommendation-products button.slick-next {
 	right: -20px;
 }
-
 
 
 /*//////////////////////////////////////////////////*/
