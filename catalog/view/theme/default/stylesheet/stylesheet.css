@@ -714,11 +714,18 @@ a.button:hover, input.button:hover {
 	margin-bottom: 4px;
 }
 .product-recommendation-products button {
-	background-color: grey;
+	height: 150px;
+	margin-top: -75px;
 }
 .product-recommendation-products button:hover,
 .product-recommendation-products button:focus {
-	background-color: black;
+	background-color: #D5D5D5;
+}
+.product-recommendation-products button.slick-prev {
+	left: -20px;
+}
+.product-recommendation-products button.slick-next {
+	right: -20px;
 }
 
 

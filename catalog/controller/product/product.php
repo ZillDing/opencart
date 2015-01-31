@@ -534,8 +534,14 @@ class ControllerProductProduct extends Controller {
 
 			}
 
+			// get the best seller products and store them in an array
+			$this->data['best_seller_product_ids'] = array();
+
 			$number_of_products = count($this->data['products_under_same_category']);
 			$best_seller_products = $this->model_catalog_product->getBestSellerProducts($number_of_products);
+			foreach ($best_seller_products as $product) {
+				$this->data['best_seller_product_ids'][] = $product['product_id'];
+			}
 
 
 			///////////////////////////////////////////////////////////////////////////
