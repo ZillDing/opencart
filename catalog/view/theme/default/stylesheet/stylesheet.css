@@ -671,6 +671,56 @@ a.button:hover, input.button:hover {
 	border-bottom: 1px solid #DBDEE1;
 	padding: 10px;
 }
+
+/*//////////////////////////////////////////////////*/
+/* for product recommendation */
+
+.product-recommendation {
+	margin-top: 30px;
+	margin-bottom: 50px;
+}
+.product-recommendation-title {
+	margin-bottom: 20px;
+}
+.product-recommendation-products .slick-slide {
+	margin-right: 80px;
+}
+.product-recommendation-products .name a {
+	color: #38B0E3;
+	font-weight: bold;
+	text-decoration: none;
+	display: block;
+	margin-bottom: 4px;
+}
+.product-recommendation-products .price {
+	display: block;
+	font-weight: bold;
+	color: #333333;
+	margin-bottom: 4px;
+}
+.product-recommendation-products .price-old {
+	color: #F00;
+	text-decoration: line-through;
+}
+.product-recommendation-products .price-new {
+	font-weight: bold;
+}
+.product-recommendation-products .rating {
+	display: block;
+	margin-bottom: 4px;
+}
+.product-recommendation-products button {
+	background-color: grey;
+}
+.product-recommendation-products button:hover,
+.product-recommendation-products button:focus {
+	background-color: black;
+}
+
+
+
+/*//////////////////////////////////////////////////*/
+
 /* box products */
 .box-product {
 	width: 100%;
@@ -764,7 +814,7 @@ ul.box-filter, ul.box-filter ul {
 }
 ul.box-filter span {
 	font-weight: bold;
-	border-bottom: 1px solid #EEEEEE;	
+	border-bottom: 1px solid #EEEEEE;
 	display: block;
 	padding-bottom: 5px;
 	margin-bottom: 8px;
@@ -1591,7 +1641,7 @@ ul.box-filter > li ul {
 	float: left;
 	width: 48%;
 }
-/* footer */ 
+/* footer */
 #footer {
 	clear: both;
 	overflow: auto;

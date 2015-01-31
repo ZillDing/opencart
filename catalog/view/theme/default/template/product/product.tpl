@@ -245,8 +245,55 @@
 		</div>
 	</div><!-- end of #product-info -->
 
-	<!-- TODO: should add suggestion here -->
-	<div class="product-recommendation"></div>
+	<!-- ################################################################### -->
+	<!-- added code -->
+	<!-- ################################################################### -->
+
+	<?php if (count($products_under_same_category) == 0) { ?>
+
+	<div class="product-recommendation">
+		<div class="product-recommendation-title">
+			<h2>Oops! No product under the same category.</h2>
+			<p>Please check out our other products.</p>
+		</div>
+	</div>
+
+	<?php } else { ?>
+
+	<div class="product-recommendation">
+		<div class="product-recommendation-title">
+			<h2>You might also like...</h2>
+		</div>
+		<div class="product-recommendation-products">
+				<?php foreach ($products_under_same_category as $product) { ?>
+				<div>
+					<?php if ($product['thumb']) { ?>
+					<div class="image"><a href="<?php echo $product['href']; ?>"><img src="<?php echo $product['thumb']; ?>" alt="<?php echo $product['name']; ?>" /></a></div>
+					<?php } ?>
+					<div class="name"><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a></div>
+					<?php if ($product['price']) { ?>
+					<div class="price">
+						<?php if (!$product['special']) { ?>
+						<?php echo $product['price']; ?>
+						<?php } else { ?>
+						<span class="price-old"><?php echo $product['price']; ?></span> <span class="price-new"><?php echo $product['special']; ?></span>
+						<?php } ?>
+					</div>
+					<?php } ?>
+					<?php if ($product['rating']) { ?>
+					<div class="rating"><img src="catalog/view/theme/default/image/stars-<?php echo $product['rating']; ?>.png" alt="<?php echo $product['reviews']; ?>" /></div>
+					<?php } ?>
+					<a onclick="addToCart('<?php echo $product['product_id']; ?>');" class="button"><?php echo $button_cart; ?></a>
+				</div>
+				<?php } // end of foreach ?>
+		</div><!-- end of .product-recommendation-products -->
+	</div><!-- end of #product-recommendation -->
+
+	<?php } ?>
+
+	<!-- ################################################################### -->
+	<!-- end of added code -->
+	<!-- ################################################################### -->
 
 	<div id="tabs" class="htabs"><a href="#tab-description"><?php echo $tab_description; ?></a>
 		<?php if ($attribute_groups) { ?>
@@ -336,9 +383,10 @@
 				<?php if ($product['rating']) { ?>
 				<div class="rating"><img src="catalog/view/theme/default/image/stars-<?php echo $product['rating']; ?>.png" alt="<?php echo $product['reviews']; ?>" /></div>
 				<?php } ?>
-				<a onclick="addToCart('<?php echo $product['product_id']; ?>');" class="button"><?php echo $button_cart; ?></a></div>
+				<a onclick="addToCart('<?php echo $product['product_id']; ?>');" class="button"><?php echo $button_cart; ?></a>
+			</div>
 			<?php } ?>
-		</div>
+		</div><!-- end of .box-product -->
 	</div>
 	<?php } ?>
 	<?php if ($tags) { ?>
@@ -514,6 +562,13 @@ $(document).ready(function() {
 		timeFormat: 'h:m'
 	});
 	$('.time').timepicker({timeFormat: 'h:m'});
+
+	//////////////////////////////////////////////////
+	// start the slick plugin
+	$('.product-recommendation-products').slick({
+		centerMode: true,
+		variableWidth: true
+	});
 });
 //--></script>
 <?php echo $footer; ?>

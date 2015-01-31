@@ -229,6 +229,11 @@ class ControllerProductProduct extends Controller {
 			$this->document->addScript('catalog/view/javascript/jquery/tabs.js');
 			$this->document->addScript('catalog/view/javascript/jquery/colorbox/jquery.colorbox-min.js');
 			$this->document->addStyle('catalog/view/javascript/jquery/colorbox/colorbox.css');
+			// slick jquery plugin
+			$this->document->addStyle('catalog/view/javascript/jquery/slick-1.4.0/slick/slick.css');
+			$this->document->addStyle('catalog/view/javascript/jquery/slick-1.4.0/slick/slick-theme.css');
+			$this->document->addScript('catalog/view/javascript/jquery/slick-1.4.0/slick/slick.min.js');
+
 
 			$this->data['heading_title'] = $product_info['name'];
 
@@ -456,6 +461,86 @@ class ControllerProductProduct extends Controller {
 			$this->data['profiles'] = $this->model_catalog_product->getProfiles($product_info['product_id']);
 
 			$this->model_catalog_product->updateViewed($this->request->get['product_id']);
+
+			///////////////////////////////////////////////////////////////////////////
+			// Added code
+			///////////////////////////////////////////////////////////////////////////
+			// get information of products from same categories
+			// TODO: best-selling feature
+
+			$this->data['products_under_same_category'] = array();
+
+			$added_product_ids = array($product_id);
+
+			$categories = $this->model_catalog_product->getCategories($product_id);
+			foreach ($categories as $category) {
+
+				$data = array(
+					'filter_category_id' => $category['category_id']
+				);
+				$results = $this->model_catalog_product->getProducts($data);
+
+				foreach ($results as $result) {
+
+					// skip if this prooduct has been added
+					if (in_array($result['product_id'], $added_product_ids)) {
+						continue;
+					}
+
+					$added_product_ids[] = $result['product_id'];
+
+					if ($result['image']) {
+						$image = $this->model_tool_image->resize($result['image'], $this->config->get('config_image_product_width'), $this->config->get('config_image_product_height'));
+					} else {
+						$image = false;
+					}
+
+					if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
+						$price = $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax')));
+					} else {
+						$price = false;
+					}
+
+					if ((float)$result['special']) {
+						$special = $this->currency->format($this->tax->calculate($result['special'], $result['tax_class_id'], $this->config->get('config_tax')));
+					} else {
+						$special = false;
+					}
+
+					if ($this->config->get('config_tax')) {
+						$tax = $this->currency->format((float)$result['special'] ? $result['special'] : $result['price']);
+					} else {
+						$tax = false;
+					}
+
+					if ($this->config->get('config_review_status')) {
+						$rating = (int)$result['rating'];
+					} else {
+						$rating = false;
+					}
+
+					$this->data['products_under_same_category'][] = array(
+						'product_id'  => $result['product_id'],
+						'thumb'       => $image,
+						'name'        => $result['name'],
+						'description' => utf8_substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')), 0, 100) . '..',
+						'price'       => $price,
+						'special'     => $special,
+						'tax'         => $tax,
+						'rating'      => $result['rating'],
+						'href'        => $this->url->link('product/product', 'path=' . $this->request->get['path'] . '&product_id=' . $result['product_id'] . $url)
+					);
+				}
+
+			}
+
+			$number_of_products = count($this->data['products_under_same_category']);
+			$best_seller_products = $this->model_catalog_product->getBestSellerProducts($number_of_products);
+
+
+			///////////////////////////////////////////////////////////////////////////
+			// end of added code
+			///////////////////////////////////////////////////////////////////////////
 
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/product/product.tpl')) {
 				$this->template = $this->config->get('config_template') . '/template/product/product.tpl';
