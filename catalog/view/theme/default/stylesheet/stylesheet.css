@@ -676,8 +676,12 @@ a.button:hover, input.button:hover {
 /* for product recommendation */
 
 .product-recommendation {
-	margin-top: 30px;
-	margin-bottom: 50px;
+	margin-top: 20px;
+	margin-bottom: 30px;
+	border-top: 1px solid #DBDEE1;
+	border-bottom: 1px solid #DBDEE1;
+	background: #F8F8F8;
+	padding: 20px 20px 5px 20px;
 }
 .product-recommendation-title {
 	margin-bottom: 20px;

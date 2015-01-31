@@ -253,8 +253,8 @@
 
 	<div class="product-recommendation">
 		<div class="product-recommendation-title">
-			<h2>Oops! No product under the same category.</h2>
-			<p>Please check out our other products.</p>
+			<h2>Oops! No product under the same category. :(</h2>
+			<p>You may want to check out other categories.</p>
 		</div>
 	</div>
 
