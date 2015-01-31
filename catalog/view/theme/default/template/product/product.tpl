@@ -244,6 +244,10 @@
 			<?php } ?>
 		</div>
 	</div><!-- end of #product-info -->
+
+	<!-- TODO: should add suggestion here -->
+	<div class="product-recommendation"></div>
+
 	<div id="tabs" class="htabs"><a href="#tab-description"><?php echo $tab_description; ?></a>
 		<?php if ($attribute_groups) { ?>
 		<a href="#tab-attribute"><?php echo $tab_attribute; ?></a>
