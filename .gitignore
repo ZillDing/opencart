@@ -1,0 +1,12 @@
+*.diff
+*.err
+*.log
+
+._*
+*.sublime-project
+*.sublime-workspace
+
+# folders
+cache
+bower_components
+node_modules

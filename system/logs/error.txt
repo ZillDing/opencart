@@ -1,0 +1,1 @@
+2015-01-31 5:01:27 - PHP Unknown:  Object of class Action could not be converted to string in /home/student/public_html/opencart/index.php on line 242
