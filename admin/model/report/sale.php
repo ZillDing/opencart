@@ -9,6 +9,13 @@ class ModelReportSale extends Model {
 			$sql .= " WHERE o.order_status_id > '0'";
 		}
 
+		///////////////////////////////////////////////////////////////////////
+		// add filter for customer name
+		if (!empty($data['filter_customer_name'])) {
+			$sql .= " AND CONCAT(o.firstname, ' ', o.lastname) LIKE '%" . $this->db->escape($data['filter_customer_name']) . "%'";
+		}
+		///////////////////////////////////////////////////////////////////////
+
 		if (!empty($data['filter_date_start'])) {
 			$sql .= " AND DATE(o.date_added) >= '" . $this->db->escape($data['filter_date_start']) . "'";
 		}
@@ -69,17 +76,17 @@ class ModelReportSale extends Model {
 
 		switch($group) {
 			case 'day';
-				$sql = "SELECT COUNT(DISTINCT DAY(date_added)) AS total FROM `" . DB_PREFIX . "order`";
+				$sql = "SELECT COUNT(DISTINCT DAY(date_added)) AS total FROM `" . DB_PREFIX . "order` o";
 				break;
 			default:
 			case 'week':
-				$sql = "SELECT COUNT(DISTINCT WEEK(date_added)) AS total FROM `" . DB_PREFIX . "order`";
+				$sql = "SELECT COUNT(DISTINCT WEEK(date_added)) AS total FROM `" . DB_PREFIX . "order` o";
 				break;
 			case 'month':
-				$sql = "SELECT COUNT(DISTINCT MONTH(date_added)) AS total FROM `" . DB_PREFIX . "order`";
+				$sql = "SELECT COUNT(DISTINCT MONTH(date_added)) AS total FROM `" . DB_PREFIX . "order` o";
 				break;
 			case 'year':
-				$sql = "SELECT COUNT(DISTINCT YEAR(date_added)) AS total FROM `" . DB_PREFIX . "order`";
+				$sql = "SELECT COUNT(DISTINCT YEAR(date_added)) AS total FROM `" . DB_PREFIX . "order` o";
 				break;
 		}
 
@@ -88,6 +95,13 @@ class ModelReportSale extends Model {
 		} else {
 			$sql .= " WHERE order_status_id > '0'";
 		}
+
+		///////////////////////////////////////////////////////////////////////
+		// add filter for customer name
+		if (!empty($data['filter_customer_name'])) {
+			$sql .= " AND CONCAT(o.firstname, ' ', o.lastname) LIKE '%" . $this->db->escape($data['filter_customer_name']) . "%'";
+		}
+		///////////////////////////////////////////////////////////////////////
 
 		if (!empty($data['filter_date_start'])) {
 			$sql .= " AND DATE(date_added) >= '" . $this->db->escape($data['filter_date_start']) . "'";

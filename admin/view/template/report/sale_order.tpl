@@ -36,7 +36,17 @@
 							<option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
 							<?php } ?>
 							<?php } ?>
-						</select></td>
+						</select>
+					</td>
+					<!-- ################################################################## -->
+					<!-- add one more field here to filter by customer name -->
+					<!-- ################################################################## -->
+					<td><?php echo $entry_customer; ?>
+						<input type="text" name="filter_customer_name" value="<?php echo $filter_customer_name; ?>">
+					</td>
+					<!-- ################################################################## -->
+					<!-- end of self-added widget -->
+					<!-- ################################################################## -->
 					<td style="text-align: right;"><a onclick="filter();" class="button"><?php echo $button_filter; ?></a></td>
 				</tr>
 			</table>
@@ -102,6 +112,14 @@ function filter() {
 		url += '&filter_order_status_id=' + encodeURIComponent(filter_order_status_id);
 	}
 
+	////////////////////////////////////////////////////////////////////////
+	// add in the customer name filter
+	var filter_customer_name = $('input[name="filter_customer_name"]').val();
+
+	if (filter_customer_name)
+		url += '&filter_customer_name=' + encodeURIComponent(filter_customer_name);
+	////////////////////////////////////////////////////////////////////////
+
 	location = url;
 }
 //--></script>
@@ -110,6 +128,52 @@ $(document).ready(function() {
 	$('#date-start').datepicker({dateFormat: 'yy-mm-dd'});
 
 	$('#date-end').datepicker({dateFormat: 'yy-mm-dd'});
+
+	/**
+	 * add JS code to handle customer name input field
+	 * to make it autocomplete
+	 */
+	$('input[name=\'filter_customer_name\']').catcomplete({
+		source: function(request, response) {
+			$.ajax({
+				url: 'index.php?route=sale/customer/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
+				dataType: 'json',
+				success: function(json) {
+					response($.map(json, function(item) {
+						return {
+							category: item.customer_group,
+							label: item.name,
+							value: item.customer_id
+						}
+					}));
+				}
+			});
+		},
+		select: function(event, ui) {
+			$(this).val(ui.item.label);
+			filter(); // immediately filter once select
+		},
+		focus: function(event, ui) {
+			return false;
+		}
+	});
+});
+//--></script>
+<script type="text/javascript"><!--
+$.widget('custom.catcomplete', $.ui.autocomplete, {
+	_renderMenu: function(ul, items) {
+		var self = this, currentCategory = '';
+
+		$.each(items, function(index, item) {
+			if (item.category != currentCategory) {
+				ul.append('<li class="ui-autocomplete-category">' + item.category + '</li>');
+
+				currentCategory = item.category;
+			}
+
+			self._renderItem(ul, item);
+		});
+	}
 });
 //--></script>
 <?php echo $footer; ?>

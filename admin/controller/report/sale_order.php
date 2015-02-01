@@ -29,6 +29,15 @@ class ControllerReportSaleOrder extends Controller {
 			$filter_order_status_id = 0;
 		}
 
+		////////////////////////////////////////////////////////////////////
+		// store the request param
+		if (isset($this->request->get['filter_customer_name'])) {
+			$filter_customer_name = $this->request->get['filter_customer_name'];
+		} else {
+			$filter_customer_name = '';
+		}
+		////////////////////////////////////////////////////////////////////
+
 		if (isset($this->request->get['page'])) {
 			$page = $this->request->get['page'];
 		} else {
@@ -52,6 +61,12 @@ class ControllerReportSaleOrder extends Controller {
 		if (isset($this->request->get['filter_order_status_id'])) {
 			$url .= '&filter_order_status_id=' . $this->request->get['filter_order_status_id'];
 		}
+
+		////////////////////////////////////////////////////////////////////
+		if (isset($this->request->get['filter_customer_name'])) {
+			$url .= '&filter_customer_name=' . $this->request->get['filter_customer_name'];
+		}
+		////////////////////////////////////////////////////////////////////
 
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
@@ -80,6 +95,10 @@ class ControllerReportSaleOrder extends Controller {
 			'filter_date_end'        => $filter_date_end,
 			'filter_group'           => $filter_group,
 			'filter_order_status_id' => $filter_order_status_id,
+			/////////////////////////////////////////////////////////////////////////
+			// add filter by customer name
+			'filter_customer_name'   => $filter_customer_name,
+			/////////////////////////////////////////////////////////////////////////
 			'start'                  => ($page - 1) * $this->config->get('config_admin_limit'),
 			'limit'                  => $this->config->get('config_admin_limit')
 		);
@@ -115,6 +134,7 @@ class ControllerReportSaleOrder extends Controller {
 		$this->data['entry_date_end'] = $this->language->get('entry_date_end');
 		$this->data['entry_group'] = $this->language->get('entry_group');
 		$this->data['entry_status'] = $this->language->get('entry_status');
+		$this->data['entry_customer'] = $this->language->get('entry_customer');
 
 		$this->data['button_filter'] = $this->language->get('button_filter');
 
@@ -164,6 +184,13 @@ class ControllerReportSaleOrder extends Controller {
 			$url .= '&filter_order_status_id=' . $this->request->get['filter_order_status_id'];
 		}
 
+		////////////////////////////////////////////////////////////////////
+		// add one more request param of customer name
+		if (isset($this->request->get['filter_customer_name'])) {
+			$url .= '&filter_customer_name=' . $this->request->get['filter_customer_name'];
+		}
+		////////////////////////////////////////////////////////////////////
+
 		$pagination = new Pagination();
 		$pagination->total = $order_total;
 		$pagination->page = $page;
@@ -177,6 +204,10 @@ class ControllerReportSaleOrder extends Controller {
 		$this->data['filter_date_end'] = $filter_date_end;
 		$this->data['filter_group'] = $filter_group;
 		$this->data['filter_order_status_id'] = $filter_order_status_id;
+		//////////////////////////////////////////////////////////////////////
+		// store the customer name value
+		$this->data['filter_customer_name'] = $filter_customer_name;
+		//////////////////////////////////////////////////////////////////////
 
 		$this->template = 'report/sale_order.tpl';
 		$this->children = array(
