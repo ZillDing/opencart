@@ -32,6 +32,10 @@
 								<?php } else { ?>
 								<a href="<?php echo $sort_customer; ?>"><?php echo $column_customer; ?></a>
 								<?php } ?></td>
+							<!-- ############################################################################### -->
+							<!-- add a column to show referrer id -->
+							<td class="right"><?php echo $column_referrer; ?></td>
+							<!-- ############################################################################### -->
 							<td class="left"><?php if ($sort == 'status') { ?>
 								<a href="<?php echo $sort_status; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_status; ?></a>
 								<?php } else { ?>
@@ -60,6 +64,7 @@
 							<td></td>
 							<td align="right"><input type="text" name="filter_order_id" value="<?php echo $filter_order_id; ?>" size="4" style="text-align: right;" /></td>
 							<td><input type="text" name="filter_customer" value="<?php echo $filter_customer; ?>" /></td>
+							<td></td>
 							<td><select name="filter_order_status_id">
 									<option value="*"></option>
 									<?php if ($filter_order_status_id == '0') { ?>
@@ -90,6 +95,7 @@
 								<?php } ?></td>
 							<td class="right"><?php echo $order['order_id']; ?></td>
 							<td class="left"><?php echo $order['customer']; ?></td>
+							<td class="right"><?php echo $order['referrer_id']; ?></td>
 							<td class="left"><?php echo $order['status']; ?></td>
 							<td class="right"><?php echo $order['total']; ?></td>
 							<td class="left"><?php echo $order['date_added']; ?></td>

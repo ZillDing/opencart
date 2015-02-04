@@ -331,6 +331,7 @@ class ControllerSaleOrder extends Controller {
 			$this->data['orders'][] = array(
 				'order_id'      => $result['order_id'],
 				'customer'      => $result['customer'],
+				'referrer_id'   => $result['referrer_id'],
 				'status'        => $result['status'],
 				'total'         => $this->currency->format($result['total'], $result['currency_code'], $result['currency_value']),
 				'date_added'    => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
@@ -347,6 +348,7 @@ class ControllerSaleOrder extends Controller {
 
 		$this->data['column_order_id'] = $this->language->get('column_order_id');
 		$this->data['column_customer'] = $this->language->get('column_customer');
+		$this->data['column_referrer'] = $this->language->get('column_referrer');
 		$this->data['column_status'] = $this->language->get('column_status');
 		$this->data['column_total'] = $this->language->get('column_total');
 		$this->data['column_date_added'] = $this->language->get('column_date_added');
