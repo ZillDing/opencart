@@ -5,6 +5,9 @@ $_['heading_title']         = 'Customer Orders Report';
 // Text
 $_['text_all_status']       = 'All Statuses';
 
+// Button
+$_['button_export']       = 'Export to CSV';
+
 // Column
 $_['column_customer']       = 'Customer Name';
 $_['column_email']          = 'E-Mail';

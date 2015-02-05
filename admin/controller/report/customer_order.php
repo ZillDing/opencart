@@ -49,17 +49,17 @@ class ControllerReportCustomerOrder extends Controller {
 
 		$this->data['breadcrumbs'] = array();
 
-   		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_home'),
+		$this->data['breadcrumbs'][] = array(
+			'text'      => $this->language->get('text_home'),
 			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => false
-   		);
+			'separator' => false
+		);
 
-   		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('heading_title'),
+		$this->data['breadcrumbs'][] = array(
+			'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('report/customer_order', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-      		'separator' => ' :: '
-   		);
+			'separator' => ' :: '
+		);
 
 		$this->load->model('report/customer');
 
@@ -76,6 +76,10 @@ class ControllerReportCustomerOrder extends Controller {
 		$customer_total = $this->model_report_customer->getTotalOrders($data);
 
 		$results = $this->model_report_customer->getOrders($data);
+
+		if (isset($this->request->get['export'])) {
+			export_to_csv($results, 'customer_order');
+		}
 
 		foreach ($results as $result) {
 			$action = array();
@@ -97,7 +101,7 @@ class ControllerReportCustomerOrder extends Controller {
 			);
 		}
 
- 		$this->data['heading_title'] = $this->language->get('heading_title');
+		$this->data['heading_title'] = $this->language->get('heading_title');
 
 		$this->data['text_no_results'] = $this->language->get('text_no_results');
 		$this->data['text_all_status'] = $this->language->get('text_all_status');
@@ -115,6 +119,7 @@ class ControllerReportCustomerOrder extends Controller {
 		$this->data['entry_date_end'] = $this->language->get('entry_date_end');
 		$this->data['entry_status'] = $this->language->get('entry_status');
 
+		$this->data['button_export'] = $this->language->get('button_export');
 		$this->data['button_filter'] = $this->language->get('button_filter');
 
 		$this->data['token'] = $this->session->data['token'];
