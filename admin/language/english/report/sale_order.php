@@ -9,6 +9,9 @@ $_['text_week']         = 'Weeks';
 $_['text_day']          = 'Days';
 $_['text_all_status']   = 'All Statuses';
 
+// Button
+$_['button_export']   = 'Export to CSV';
+
 // Column
 $_['column_date_start'] = 'Date Start';
 $_['column_date_end']   = 'Date End';

@@ -168,3 +168,38 @@ $controller->dispatch($action, new Action('error/not_found'));
 // Output
 $response->output();
 ?>
+
+<?php
+////////////////////////////////////////////////////////////////////////////////
+// add a funciton here to allow export database data to csv file
+function export_to_csv($rows, $file_prefix) {
+
+	function cleanData(&$str) {
+		if($str == 't') $str = 'TRUE';
+		if($str == 'f') $str = 'FALSE';
+		if(preg_match("/^0/", $str) || preg_match("/^\+?\d{8,}$/", $str) || preg_match("/^\d{4}.\d{1,2}.\d{1,2}/", $str)) {
+			$str = "'$str";
+		}
+		if(strstr($str, '"')) $str = '"' . str_replace('"', '""', $str) . '"';
+	}
+	// filename for download
+	$filename = $file_prefix . "_data_" . date('Ymd') . ".csv";
+	header("Content-Disposition: attachment; filename=\"$filename\"");
+	header("Content-Type: text/csv");
+
+	$out = fopen("php://output", 'w');
+
+	$flag = false;
+	foreach($rows as $row) {
+		if(!$flag) {
+			// display field/column names as first row
+			fputcsv($out, array_keys($row), ',', '"');
+			$flag = true;
+		}
+		array_walk($row, 'cleanData');
+		fputcsv($out, array_values($row), ',', '"');
+	}
+	fclose($out);
+	exit;
+}
+?>

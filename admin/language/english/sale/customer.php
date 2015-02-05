@@ -11,11 +11,15 @@ $_['text_balance']          = 'Balance:';
 $_['text_add_ban_ip']       = 'Add Ban IP';
 $_['text_remove_ban_ip']    = 'Remove Ban IP';
 
+// Button
+$_['button_filter_best_customer'] = 'Best Customer';
+$_['button_filter_best_referrer'] = 'Best Referrer';
+
 // Column
 $_['column_name']           = 'Customer Name';
 $_['column_email']          = 'E-Mail';
 $_['column_customer_group'] = 'Customer Group';
-$_['column_status']         = 'Status'; 
+$_['column_status']         = 'Status';
 $_['column_login']          = 'Login into Store';
 $_['column_approved']       = 'Approved';
 $_['column_date_added']     = 'Date Added';
