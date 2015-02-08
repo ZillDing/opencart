@@ -63,6 +63,15 @@ class ControllerReportCustomerOrder extends Controller {
 
 		$this->load->model('report/customer');
 
+		//////////////////////////////////////////////////////////////////////////
+		if (isset($this->request->get['customer_id'])) {
+			$customer_id = $this->request->get['customer_id'];
+			$results = $this->model_report_customer->getOrdersByCustomerId($customer_id);
+			$this->response->setOutput(json_encode($results));
+			return;
+		}
+		//////////////////////////////////////////////////////////////////////////
+
 		$this->data['customers'] = array();
 
 		$data = array(
@@ -77,19 +86,33 @@ class ControllerReportCustomerOrder extends Controller {
 
 		$results = $this->model_report_customer->getOrders($data);
 
+		///////////////////////////////////////////////////////////////////////////
+		// add fucntionality to allow export data
 		if (isset($this->request->get['export'])) {
 			export_to_csv($results, 'customer_order');
 		}
+		///////////////////////////////////////////////////////////////////////////
 
 		foreach ($results as $result) {
 			$action = array();
 
+			//////////////////////////////////////////////////////////////////////////
+			// add one more action
 			$action[] = array(
+				'name' => 'view',
+				'text' => $this->language->get('text_view'),
+				'href' => '#'
+			);
+			//////////////////////////////////////////////////////////////////////////
+
+			$action[] = array(
+				'name' => 'edit',
 				'text' => $this->language->get('text_edit'),
 				'href' => $this->url->link('sale/customer/update', 'token=' . $this->session->data['token'] . '&customer_id=' . $result['customer_id'] . $url, 'SSL')
 			);
 
 			$this->data['customers'][] = array(
+				'customer_id'    => $result['customer_id'],
 				'customer'       => $result['customer'],
 				'email'          => $result['email'],
 				'customer_group' => $result['customer_group'],

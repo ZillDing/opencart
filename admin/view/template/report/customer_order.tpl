@@ -49,7 +49,7 @@
 				<tbody>
 					<?php if ($customers) { ?>
 					<?php foreach ($customers as $customer) { ?>
-					<tr>
+					<tr data_customer_id="<?php echo $customer['customer_id']; ?>">
 						<td class="left"><?php echo $customer['customer']; ?></td>
 						<td class="left"><?php echo $customer['email']; ?></td>
 						<td class="left"><?php echo $customer['customer_group']; ?></td>
@@ -58,7 +58,7 @@
 						<td class="right"><?php echo $customer['products']; ?></td>
 						<td class="right"><?php echo $customer['total']; ?></td>
 						<td class="right"><?php foreach ($customer['action'] as $action) { ?>
-							[ <a href="<?php echo $action['href']; ?>"><?php echo $action['text']; ?></a> ]
+							[ <a id="action_<?php echo $action['name']; ?>" href="<?php echo $action['href']; ?>"><?php echo $action['text']; ?></a> ]
 							<?php } ?></td>
 					</tr>
 					<?php } ?>
@@ -72,11 +72,34 @@
 			<div class="pagination"><?php echo $pagination; ?></div>
 		</div>
 	</div>
+	<div class="box box-customer" hidden>
+		<div class="heading">
+			<h1>Customer: <span></span></h1>
+		</div>
+		<div class="content">
+			<table class="list">
+				<thead>
+					<tr>
+						<td class="right">Order ID</td>
+						<td class="right">Order Status ID</td>
+						<td class="right">Currency</td>
+						<td class="right">Total</td>
+						<td class="right">Date Added</td>
+						<td class="right">Date Modified</td>
+						<td class="right">Referrer ID</td>
+					</tr>
+				</thead>
+				<tbody></tbody>
+			</table>
+		</div>
+	</div>
 </div>
 <script type="text/javascript"><!--
+/////////////////////////////////////////////////////////////////////////////////
 function exportToCsv () {
 	location = document.URL + '&export';
 }
+/////////////////////////////////////////////////////////////////////////////////
 //--></script>
 <script type="text/javascript"><!--
 function filter() {
@@ -108,6 +131,40 @@ $(document).ready(function() {
 	$('#date-start').datepicker({dateFormat: 'yy-mm-dd'});
 
 	$('#date-end').datepicker({dateFormat: 'yy-mm-dd'});
+
+	///////////////////////////////////////////////////////////////////////////////
+	// view button event handler
+	$('a#action_view').click(function () {
+		var sCustomerId = $(this).closest('tr').attr('data_customer_id');
+		var sUrl = 'index.php?route=report/customer_order&token=<?php echo $token; ?>&customer_id=' + sCustomerId;
+		$.get(sUrl, function (data) {
+			var data = $.parseJSON(data);
+			if (data) {
+				// display data
+				var c = data[0].firstname + ' ' + data[0].lastname + ' (' + data[0].customer_id + ')';
+				$('.box.box-customer .heading h1 span').text(c);
+				$('.box.box-customer').show();
+				var s = _.template(sCustomerOrderTemplate) ({
+					orders: data
+				});
+				$('.box.box-customer .content table>tbody').html(s);
+			}
+		})
+		return false;
+	});
+
+	var sCustomerOrderTemplate =
+		'<% _.each(orders, function (order) { %>\
+			<tr>\
+				<td class="right"><%= order.order_id %></td>\
+				<td class="right"><%= order.order_status_id %></td>\
+				<td class="right"><%= order.currency_code %></td>\
+				<td class="right"><%= order.total %></td>\
+				<td class="right"><%= order.date_added %></td>\
+				<td class="right"><%= order.date_modified %></td>\
+				<td class="right"><%= order.referrer_id %></td>\
+			</tr>\
+		<% }); %>';
 });
 //--></script>
 <?php echo $footer; ?>
