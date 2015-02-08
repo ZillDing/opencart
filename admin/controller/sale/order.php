@@ -331,7 +331,7 @@ class ControllerSaleOrder extends Controller {
 			$this->data['orders'][] = array(
 				'order_id'      => $result['order_id'],
 				'customer'      => $result['customer'],
-				'referrer_id'   => $result['referrer_id'],
+				'referrer'   => $this->model_sale_order->getCustomerName($result['referrer_id']),
 				'status'        => $result['status'],
 				'total'         => $this->currency->format($result['total'], $result['currency_code'], $result['currency_value']),
 				'date_added'    => date($this->language->get('date_format_short'), strtotime($result['date_added'])),

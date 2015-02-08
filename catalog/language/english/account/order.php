@@ -1,5 +1,5 @@
 <?php
-// Heading 
+// Heading
 $_['heading_title']         = 'Order History';
 
 // Text
@@ -8,6 +8,7 @@ $_['text_order']            = 'Order Information';
 $_['text_order_detail']     = 'Order Details';
 $_['text_invoice_no']       = 'Invoice No.:';
 $_['text_order_id']         = 'Order ID:';
+$_['text_referrer']         = 'Referrer:';
 $_['text_status']           = 'Status:';
 $_['text_date_added']       = 'Date Added:';
 $_['text_customer']         = 'Customer:';

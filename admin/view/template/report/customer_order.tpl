@@ -82,6 +82,7 @@
 					<tr>
 						<td class="right">Order ID</td>
 						<td class="right">Order Status ID</td>
+						<td class="right">Invoice</td>
 						<td class="right">Currency</td>
 						<td class="right">Total</td>
 						<td class="right">Date Added</td>
@@ -140,6 +141,7 @@ $(document).ready(function() {
 		$.get(sUrl, function (data) {
 			var data = $.parseJSON(data);
 			if (data) {
+				console.log(data);
 				// display data
 				var c = data[0].firstname + ' ' + data[0].lastname + ' (' + data[0].customer_id + ')';
 				$('.box.box-customer .heading h1 span').text(c);
@@ -158,6 +160,7 @@ $(document).ready(function() {
 			<tr>\
 				<td class="right"><%= order.order_id %></td>\
 				<td class="right"><%= order.order_status_id %></td>\
+				<td class="right"><%= order.invoice_prefix + order.invoice_no %></td>\
 				<td class="right"><%= order.currency_code %></td>\
 				<td class="right"><%= order.total %></td>\
 				<td class="right"><%= order.date_added %></td>\

@@ -34,7 +34,7 @@
 								<?php } ?></td>
 							<!-- ############################################################################### -->
 							<!-- add a column to show referrer id -->
-							<td class="right"><?php echo $column_referrer; ?></td>
+							<td class="left"><?php echo $column_referrer; ?></td>
 							<!-- ############################################################################### -->
 							<td class="left"><?php if ($sort == 'status') { ?>
 								<a href="<?php echo $sort_status; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_status; ?></a>
@@ -95,7 +95,7 @@
 								<?php } ?></td>
 							<td class="right"><?php echo $order['order_id']; ?></td>
 							<td class="left"><?php echo $order['customer']; ?></td>
-							<td class="right"><?php echo $order['referrer_id']; ?></td>
+							<td class="left"><?php echo $order['referrer']; ?></td>
 							<td class="left"><?php echo $order['status']; ?></td>
 							<td class="right"><?php echo $order['total']; ?></td>
 							<td class="left"><?php echo $order['date_added']; ?></td>

@@ -18,6 +18,7 @@
           <b><?php echo $text_invoice_no; ?></b> <?php echo $invoice_no; ?><br />
           <?php } ?>
           <b><?php echo $text_order_id; ?></b> #<?php echo $order_id; ?><br />
+          <b><?php echo $text_referrer; ?></b> <?php echo $referrer; ?><br />
           <b><?php echo $text_date_added; ?></b> <?php echo $date_added; ?></td>
         <td class="left" style="width: 50%;"><?php if ($payment_method) { ?>
           <b><?php echo $text_payment_method; ?></b> <?php echo $payment_method; ?><br />
@@ -139,4 +140,4 @@
     <div class="right"><a href="<?php echo $continue; ?>" class="button"><?php echo $button_continue; ?></a></div>
   </div>
   <?php echo $content_bottom; ?></div>
-<?php echo $footer; ?> 
+<?php echo $footer; ?>
