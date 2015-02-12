@@ -25,44 +25,50 @@ class ControllerCheckoutReferrer extends Controller {
 	public function validate() {
 		$this->language->load('checkout/checkout');
 
+		$this->session->data['referrer_id'] = 0;
 		$json = array();
 
 		if (isset($this->request->post['referrer_id'])) {
 
 			$referrer_id = $this->request->post['referrer_id'];
 
-			if (!is_numeric($referrer_id)) {
+			if (!empty($referrer_id)) {
 
-				$json['error']['warning'] = $this->language->get('error_referrer');
+				if (!is_numeric($referrer_id)) {
 
-			} else {
-
-				if (!is_int($referrer_id + 0)) {
-
-					$json['error']['warning'] = $this->language->get('error_referrer');
+					$json['error']['warning'] = $this->language->get('error_referrer') . ' Must be a number.';
 
 				} else {
 
-					// check whether the referrer id is a valid customer id
-					$this->load->model('account/customer');
-					$result = $this->model_account_customer->getCustomer($referrer_id);
+					if (!is_int($referrer_id + 0)) {
 
-					if (count($result) == 0) {
-						$json['error']['warning'] = $this->language->get('error_referrer');
+						$json['error']['warning'] = $this->language->get('error_referrer') . ' Must be an integer.';
+
 					} else {
 
-						if ($this->customer->isLogged() &&
-							$this->customer->getId() == $referrer_id) {
+						// check whether the referrer id is a valid customer id
+						$this->load->model('account/customer');
+						$result = $this->model_account_customer->getCustomer($referrer_id);
 
-							$json['error']['warning'] = $this->language->get('error_referrer');
+						if (count($result) == 0) {
+
+							$json['error']['warning'] = $this->language->get('error_referrer') . ' No such customer.';
 
 						} else {
 
-							$this->session->data['referrer_id'] = (int) $referrer_id;
+							if ($this->customer->isLogged() &&
+								$this->customer->getId() == $referrer_id) {
 
+								$json['error']['warning'] = $this->language->get('error_referrer') . ' Cannot provide your own id.';
+
+							} else {
+
+								$this->session->data['referrer_id'] = (int) $referrer_id;
+
+							}
 						}
-					}
 
+					}
 				}
 			}
 

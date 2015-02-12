@@ -4,7 +4,11 @@ class ModelSaleOrder extends Model {
 		if (is_numeric($customer_id)) {
 			$query = $this->db->query("SELECT * FROM  " . DB_PREFIX . "customer WHERE customer_id = " . (int)$customer_id);
 			$row = $query->row;
-			return $row["firstname"] . " " . $row["lastname"];
+			if (empty($row)) {
+				return "";
+			} else {
+				return $row["firstname"] . " " . $row["lastname"];
+			}
 		} else {
 			return "";
 		}
