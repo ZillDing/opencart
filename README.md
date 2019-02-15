@@ -1,4 +1,7 @@
 # opencart
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/zillding/opencart.svg)](https://greenkeeper.io/)
+
 NUS SoC CS5331 Assignment 1
 
 Test users:
