@@ -1,0 +1,9 @@
+{
+  "groups": {
+    "default": {
+      "packages": [
+        "catalog/view/javascript/jquery/slick-1.4.0/package.json"
+      ]
+    }
+  }
+}
